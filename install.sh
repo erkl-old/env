@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Basic configuration.
 CONF_DEVICE="/dev/sda"
 CONF_DMNAME="crypt"
