@@ -5,8 +5,6 @@ CONF_DEVICE="/dev/sda"
 CONF_DMNAME="crypt"
 CONF_VGNAME="system"
 
-CONF_LANG="en_GB"
-CONF_LANGUAGE="en_GB:en_US:en"
 CONF_KEYMAP="uk"
 CONF_TIMEZONE="Europe/London"
 
@@ -179,12 +177,12 @@ EOF
 
 # Configure locale.
 cat > /mnt/etc/locale.conf <<EOF
-LANG=${CONF_LANG}.UTF-8
-LANGUAGE=${CONF_LANGUAGE}
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
 EOF
 
 cat > /mnt/etc/locale.gen <<EOF
-${CONF_LANG}.UTF-8 UTF-8
+en_US.UTF-8 UTF-8
 EOF
 
 locale-gen
