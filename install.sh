@@ -211,7 +211,7 @@ arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 
 
 # Install GRUB.
-sed -e 's/^\(GRUB_CMDLINE_LINUX\)=.*$/\1="\2="cryptdevice=\/dev\/sda2:crypt resume=\/dev\/mapper\/system-swap"/' -i /mnt/etc/default/grub
+sed -e 's/^GRUB_CMDLINE_LINUX=.*$/GRUB_CMDLINE_LINUX="cryptdevice=\/dev\/sda2:crypt resume=\/dev\/mapper\/system-swap"/' -i /mnt/etc/default/grub
 arch-chroot /mnt /bin/bash -c "grub-install --target=i386-pc --recheck ${CONF_DEVICE}"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 
