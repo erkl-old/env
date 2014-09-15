@@ -16,36 +16,37 @@ CONF_SWAP_SIZE="4G"
 
 
 # Display the obligatory warning.
-printf "#######################################################\n"
-printf "##                                                   ##\n"
-printf "##               --     WARNING     --               ##\n"
-printf "##                                                   ##\n"
-printf "##    This command will erase all your cat gifs.     ##\n"
-printf "##       (Also everything else on /dev/sda).         ##\n"
-printf "##                                                   ##\n"
-printf "#######################################################\n"
+printf "\n"
+printf "  #######################################################\n"
+printf "  ##                                                   ##\n"
+printf "  ##               --     WARNING     --               ##\n"
+printf "  ##                                                   ##\n"
+printf "  ##    This command will erase all your cat gifs.     ##\n"
+printf "  ##       (Also everything else on /dev/sda).         ##\n"
+printf "  ##                                                   ##\n"
+printf "  #######################################################\n"
 printf "\n"
 
 
 # Read configuration which is likely to change between machines.
 while [ -z "${CONF_HOSTNAME}" ]; do
-  printf "   Hostname: "
+  printf "     Hostname: "
   read CONF_HOSTNAME
 done
 
 while [ -z "${CONF_USERNAME}" ]; do
-  printf "   User: "
+  printf "     User: "
   read CONF_USERNAME
 done
 
 while [ -z "${CONF_PASSWORD}" ]; do
-  printf "   Password: "
+  printf "     Password: "
   read -s CONF_PASSWORD
   printf "\n"
 done
 
 while [ -z "${CONF_LUKS_PASSPHRASE}" ]; do
-  printf "   Encryption key: "
+  printf "     Encryption key: "
   read -s CONF_LUKS_PASSPHRASE
   printf "\n"
 done
