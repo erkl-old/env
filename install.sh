@@ -137,7 +137,7 @@ EOF
 
 
 # At last, install the base system.
-pacstrap /mnt base base-devel grub-bios
+pacstrap /mnt base base-devel grub-bios ifplugd wpa_actiond
 
 
 # Generate /etc/fstab.
