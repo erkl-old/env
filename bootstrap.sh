@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 
 # Stop at the first sign of trouble.
-set -e
-set -x
+set -ex
 
 # Download and decrypt the public and private keys.
 mkdir -p ~/.ssh
