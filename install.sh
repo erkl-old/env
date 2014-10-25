@@ -204,12 +204,13 @@ arch-chroot /mnt /bin/bash -c "hwclock --systohc --utc"
 
 # Add "keymap", "encrypt", "lvm" and "resume" hooks, then build the initial
 # ramdisk environment.
-sed -e 's/^\(HOOKS=".*\) \(filesystems.*"\)/\1 keymap encrypt lvm2 resume \2/' -i /mnt/etc/mkinitcpio.conf
+sed -e 's/^\(HOOKS=".*\) \(filesystems .*"\)$/\1 keymap encrypt lvm2 resume \2/' -i /mnt/etc/mkinitcpio.conf
 arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 
 
 # Install GRUB.
 sed -e 's/^GRUB_CMDLINE_LINUX=.*$/GRUB_CMDLINE_LINUX="cryptdevice=\/dev\/sda2:crypt resume=\/dev\/mapper\/system-swap"/' -i /mnt/etc/default/grub
+sed -e 's/^GRUB_GFXMODE=.*$/GRUB_GFXMODE=800x600,600x480/' -i /mnt/etc/default/grub
 arch-chroot /mnt /bin/bash -c "grub-install --target=i386-pc --recheck ${CONF_DEVICE}"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 
