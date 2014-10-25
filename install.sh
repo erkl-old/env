@@ -8,9 +8,11 @@ CONF_VGNAME="system"
 CONF_KEYMAP="uk"
 CONF_TIMEZONE="Europe/London"
 
+
+# Volume sizes.
 CONF_ROOT_SIZE="16G"
-CONF_VAR_SIZE="8G"
-CONF_SWAP_SIZE="4G"
+CONF_VAR_SIZE="14G"
+CONF_SWAP_SIZE="2G"
 
 
 # Display the obligatory warning.
