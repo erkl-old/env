@@ -44,6 +44,11 @@ zstyle ':completion:*' insert-tab pending
 # Use arrow-driven completion menus.
 zstyle ':completion:*' menu select
 
+# Load rc.zsh-files in other modules.
+for rc in $(find "$HOME/.env/*/rc.zsh" 2>/dev/null); do
+  source "$rc"
+done
+
 # Initialize autocomplete.
 autoload -U compinit
 compinit
