@@ -18,3 +18,8 @@ chmod 0644 ~/.ssh/id_rsa.pub
 
 # Clone the whole repository.
 git clone git@github.com:erkl/env.git ~/.env
+
+# Run the setup script.
+cd ~/.env
+sh install.sh
+cd -
