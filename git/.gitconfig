@@ -1,0 +1,56 @@
+[core]
+	excludesfile = ~/.env/git/.gitignore
+	whitespace   = trailing-space,space-before-tab
+
+[user]
+	name  = Erik Lundin
+	email = erklundin@gmail.com
+
+[alias]
+	ap = add -p
+	cm = commit -m
+	ed = commit --amend
+	ca = commit --amend --no-edit
+	ff = pull --ff-only
+	df = diff --color-words --abbrev
+	ds = diff --color-words --abbrev --staged
+	dh = diff --color-words --abbrev HEAD^..HEAD
+	lg = log --graph --all --decorate
+	un = reset --soft HEAD^
+	co = checkout -B
+
+[color]
+	diff   = auto
+	status = auto
+	branch = auto
+	ui     = auto
+
+[push]
+	default = current
+
+[diff]
+	algorithm = patience
+	renames   = copies
+
+[merge]
+	stat = true
+	log  = true
+
+[rerere]
+	enabled = true
+
+[advice]
+	pushUpdateRejected = false
+	pushNonFFCurrent   = false
+	pushNonFFMatching  = false
+	pushAlreadyExists  = false
+	pushFetchFirst     = false
+	pushNeedsForce     = false
+	statusHints        = false
+	statusUoption      = false
+	commitBeforeMerge  = false
+	resolveConflict    = false
+	implicitIdentity   = false
+	detachedHead       = false
+	amWorkDir          = false
+	rmHints            = false
