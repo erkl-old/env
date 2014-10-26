@@ -12,7 +12,7 @@ setopt AUTO_LIST              # Automatically list choices for ambiguous complet
 setopt LIST_AMBIGUOUS         # Insert as manny characters as possible for ambiguous completions.
 setopt NO_MENU_COMPLETE       # Don't pick the first completion option automatically.
 
-setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks from commands in history.
+setopt HIST_REDUCE_BLANKS     # Remove superfluous space from commands in history.
 setopt HIST_IGNORE_ALL_DUPS   # Only keep the latter of duplicate commands in history.
 setopt APPEND_HISTORY         # Append to the history file, rather than overwrite it.
 
