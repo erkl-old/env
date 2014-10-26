@@ -45,7 +45,7 @@ zstyle ':completion:*' insert-tab pending
 zstyle ':completion:*' menu select
 
 # Load rc.zsh-files in other modules.
-for rc in $(find "$HOME/.env/*/rc.zsh" 2>/dev/null); do
+for rc in $HOME/.env/*/rc.zsh; do
   source "$rc"
 done
 

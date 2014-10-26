@@ -3,8 +3,7 @@
 # Stop at the first sign of trouble.
 set -ex
 
-# Include all rc.zsh scripts.
-for rc in $(find "$HOME/.env/*/rc.zsh" 2>/dev/null); do
-  source "$rc"
+# Run all install scripts.
+for script in $HOME/.env/*/install.sh; do
+  sh "$script"
 done
-
