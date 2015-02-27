@@ -4,7 +4,6 @@ set novisualbell   " Disable visual error bell.
 set encoding=utf8  " Use UTF-8, of course.
 set number         " Show line numbers.
 set ruler          " Show the bottom ruler.
-set cursorline     " Highlight the selected line.
 set nowrap         " Disable line wrapping.
 set backspace=2    " Make backspace work like most other apps.
 set scrolloff=6    " Preserve 6 lines of context when scrolling.
