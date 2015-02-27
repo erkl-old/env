@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-
-# Stop at the first sign of trouble.
 set -ex
 
 # Pull down the prefered version if it's not already installed.
