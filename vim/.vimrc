@@ -9,11 +9,12 @@ set backspace=2    " Make backspace work like most other apps.
 set scrolloff=6    " Preserve 6 lines of context when scrolling.
 set autoread       " Check for file changes after external commands.
 
-" Tabs are 4 characters wide.
+" Tabs should be 4 space characters wide.
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
 set smarttab
+set expandtab
 
 " Improve search in various ways.
 set hlsearch
