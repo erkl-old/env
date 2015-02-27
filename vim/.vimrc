@@ -13,8 +13,11 @@ set autoread       " Check for file changes after external commands.
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
-set smarttab
 set expandtab
+
+" This seems to be the only way to prevent "clever"
+" indentation from getting in the way.
+set paste
 
 " Improve search in various ways.
 set hlsearch
