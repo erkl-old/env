@@ -1,18 +1,5 @@
 #!/usr/bin/env sh
 
-# Basic configuration.
-CONF_DEVICE="/dev/sda"
-CONF_DMNAME="crypt"
-CONF_VGNAME="system"
-
-CONF_KEYMAP="uk"
-CONF_TIMEZONE="Europe/London"
-
-# Volume sizes.
-CONF_ROOT_SIZE="16G"
-CONF_VAR_SIZE="8G"
-CONF_SWAP_SIZE="2G"
-
 # Display the obligatory warning.
 printf "\n"
 printf "  #######################################################\n"
@@ -24,6 +11,18 @@ printf "  ##      (...and anything else on the partition)      ##\n"
 printf "  ##                                                   ##\n"
 printf "  #######################################################\n"
 printf "\n"
+
+# Static configuration.
+CONF_DEVICE="/dev/sda"
+CONF_DMNAME="crypt"
+CONF_VGNAME="system"
+
+CONF_KEYMAP="uk"
+CONF_TIMEZONE="Europe/London"
+
+CONF_ROOT_SIZE="16G"
+CONF_VAR_SIZE="8G"
+CONF_SWAP_SIZE="2G"
 
 # Read configuration which is likely to change between machines.
 while [ -z "${CONF_HOSTNAME}" ]; do
