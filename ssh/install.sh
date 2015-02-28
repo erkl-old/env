@@ -9,8 +9,8 @@ if [ ! -e "$HOME/.ssh/id_rsa" -o ! -e "$HOME/.ssh/id_rsa.pub" ]; then
     mkdir -p "$HOME/.ssh"
     chmod 0700 "$HOME/.ssh"
 
-    openssl enc -aes-256-cbc -d -in "$HOME/.env/ssh/keys/id_rsa.encrypted" -out "$HOME/.ssh/id_rsa"
-    openssl enc -aes-256-cbc -d -in "$HOME/.env/ssh/keys/id_rsa.pub.encrypted" -out "$HOME/.ssh/id_rsa.pub"
+    openssl enc -aes-256-cbc -d -base64 -in "$HOME/.env/ssh/keys/id_rsa.enc" -out "$HOME/.ssh/id_rsa"
+    openssl enc -aes-256-cbc -d -base64 -in "$HOME/.env/ssh/keys/id_rsa.pub.enc" -out "$HOME/.ssh/id_rsa.pub"
 
     chmod 0600 "$HOME/.ssh/id_rsa"
     chmod 0644 "$HOME/.ssh/id_rsa.pub"
