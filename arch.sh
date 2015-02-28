@@ -1,53 +1,72 @@
 #!/usr/bin/env sh
 
-# Display the obligatory warning.
-printf "\n"
-printf "  #######################################################\n"
-printf "  ##                                                   ##\n"
-printf "  ##               --     WARNING     --               ##\n"
-printf "  ##                                                   ##\n"
-printf "  ##    This command will erase all your cat gifs.     ##\n"
-printf "  ##      (...and anything else on the partition)      ##\n"
-printf "  ##                                                   ##\n"
-printf "  #######################################################\n"
-printf "\n"
-
-# Static configuration.
-CONF_DEVICE="/dev/sda"
-CONF_DMNAME="crypt"
-CONF_VGNAME="system"
-
-CONF_KEYMAP="uk"
-CONF_TIMEZONE="Europe/London"
-
-CONF_ROOT_SIZE="16G"
-CONF_VAR_SIZE="8G"
-CONF_SWAP_SIZE="2G"
-
-# Read configuration which is likely to change between machines.
+# Basic configuration.
+printf "\n    Hostname:\n"
 while [ -z "${CONF_HOSTNAME}" ]; do
-  printf "     Hostname: "
-  read CONF_HOSTNAME
+  printf "      > "; read CONF_HOSTNAME
 done
 
+printf "\n    Username:\n"
 while [ -z "${CONF_USERNAME}" ]; do
-  printf "     User: "
-  read CONF_USERNAME
+  printf "      > "; read CONF_USERNAME
 done
 
+printf "\n    Password:\n"
 while [ -z "${CONF_PASSWORD}" ]; do
-  printf "     Password: "
-  read -s CONF_PASSWORD
-  printf "\n"
+  printf "      > "; read -s CONF_PASSWORD; printf "\n"
 done
 
+# Location configuration.
+printf "\n    Keymap (e.g. \"uk\"):\n"
+while [ -z "${CONF_KEYMAP}" ]; do
+  printf "      > "; read CONF_KEYMAP
+done
+
+printf "\n    Timezone (e.g. \"Europe/London\"):\n"
+while [ -z "${CONF_TIMEZONE}" ]; do
+  printf "      > "; read CONF_TIMEZONE
+done
+
+# LUKS configuration.
+printf "\n    LUKS device (e.g. \"/dev/sda\"):\n"
+while [ -z "${CONF_DEVICE}" ]; do
+  printf "      > "; read CONF_DEVICE
+done
+
+printf "\n    LUKS volume name (e.g. \"crypt\"):\n"
+while [ -z "${CONF_DMNAME}" ]; do
+  printf "      > "; read CONF_DMNAME
+done
+
+printf "\n    LUKS password:\n"
 while [ -z "${CONF_LUKS_PASSPHRASE}" ]; do
-  printf "     Encryption key: "
-  read -s CONF_LUKS_PASSPHRASE
-  printf "\n"
+  printf "      > "; read -s CONF_LUKS_PASSPHRASE; printf "\n"
 done
 
-printf "\n"
+# LVM configuration.
+printf "\n    LVM volume name (e.g. \"system\"):\n"
+while [ -z "${CONF_VGNAME}" ]; do
+  printf "      > "; read CONF_VGNAME
+done
+
+printf "\n    / partition size (e.g. \"8G\"):\n"
+while [ -z "${CONF_ROOT_SIZE}" ]; do
+  printf "      > "; read CONF_ROOT_SIZE
+done
+
+printf "\n    /var partition size (e.g. \"4G\"):\n"
+while [ -z "${CONF_VAR_SIZE}" ]; do
+  printf "      > "; read CONF_VAR_SIZE
+done
+
+printf "\n    Swap partition size (e.g. \"1G\"):\n"
+while [ -z "${CONF_SWAP_SIZE}" ]; do
+  printf "      > "; read CONF_SWAP_SIZE
+done
+
+# Ask for confirmation before starting.
+printf "\n -- Ready, press any key to begin. --\n"
+read
 
 # Stop at the first sign of trouble.
 set -ex
