@@ -12,6 +12,8 @@
 	ed = commit --amend
 	ca = commit --amend --no-edit
 	ff = pull --ff-only
+	pl = pull --rebase
+	pu = push -u
 	df = diff --color-words --abbrev
 	ds = diff --color-words --abbrev --staged
 	dh = diff --color-words --abbrev HEAD^..HEAD
