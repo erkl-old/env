@@ -1,22 +1,13 @@
 #!/usr/bin/env sh
 set -ex
 
-# Install dependencies.
-sudo pacman -S --noconfirm wget git openssh
-
-# Clone the repository if this is our first time.
-if [ ! -e "$HOME/.env" ]; then
-    git clone git@github.com:erkl/env.git "$HOME/.env"
-fi
-
-# Update package cache.
-sudo pacman -y
-
-# Run the setup script.
+# Move into the .env directory.
 cd "$HOME/.env"
 
+# Run all setup scripts.
 for script in "$HOME"/.env/*/install.sh; do
   sh "$script"
 done
 
+# Go back to the last directory.
 cd -
