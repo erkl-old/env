@@ -9,6 +9,9 @@ if [ ! -e "$HOME/.env" ]; then
     git clone git@github.com:erkl/env.git "$HOME/.env"
 fi
 
+# Update package cache.
+sudo pacman -y
+
 # Run the setup script.
 cd "$HOME/.env"
 
