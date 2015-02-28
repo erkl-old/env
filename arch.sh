@@ -142,7 +142,7 @@ Server = http://archlinux.mirrors.uk2.net/\$repo/os/\$arch
 EOF
 
 # At last, install the base system.
-pacstrap /mnt base base-devel grub-bios os-prober ifplugd wpa_actiond
+pacstrap /mnt base base-devel grub-bios ifplugd wpa_actiond
 
 # Generate /etc/fstab.
 genfstab -p /mnt > /mnt/etc/fstab
