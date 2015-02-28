@@ -2,11 +2,11 @@
 set -ex
 
 # Pull down the prefered version if it's not already installed.
-VERSION="go1.3.3"
+VERSION="1.4.2"
 
-if [ ! -e "/usr/local/go/VERSION" -o $(cat "/usr/local/go/VERSION") != "$VERSION" ]; then
+if [ ! -e "/usr/local/go/VERSION" -o $(cat "/usr/local/go/VERSION") != "go$VERSION" ]; then
 	rm -rf /usr/local/go
-	wget -qO - "https://storage.googleapis.com/golang/$VERSION.linux-amd64.tar.gz" | tar -C /usr/local -xzf
+	wget -qO - "https://storage.googleapis.com/golang/go$VERSION.linux-amd64.tar.gz" | tar -C /usr/local -xzf
 
 	# Make sure the $GOPATH directory exists.
 	mkdir "$HOME/.go"
