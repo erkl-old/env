@@ -22,7 +22,7 @@ SAVEHIST=1000
 
 # Use a very simple prompt.
 precmd() {
-  if [ -n "${SSH_CLIENT}" ]; then
+  if [ -n "$SSH_CLIENT" ]; then
     PROMPT=`echo "\033[33m%n@%m\033[0m %# "`
   else
     PROMPT="%# "
@@ -45,8 +45,8 @@ zstyle ':completion:*' insert-tab pending
 zstyle ':completion:*' menu select
 
 # Load all other .zshrc-files.
-for rc in "${HOME}"/.zshrc-*; do
-  source "${rc}"
+for rc in "$HOME"/.zshrc-*; do
+  source "$rc"
 done
 
 # Initialize autocomplete.
