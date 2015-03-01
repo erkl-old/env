@@ -1,5 +1,5 @@
 [core]
-	excludesfile = ~/.env/git/.gitignore
+	excludesfile = ~/.gitignore-global
 	whitespace   = trailing-space,space-before-tab
 
 [user]
