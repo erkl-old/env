@@ -1,5 +1,5 @@
-export GOPATH="${HOME}/.go"
-export GOROOT="/usr/local/go"
+export GOROOT="/usr/lib/go"
+export GOPATH="$HOME/.go"
 
-export PATH="${PATH}:${GOPATH}/bin:${GOROOT}/bin"
-export CDPATH=".:${GOPATH}/src/github.com:${GOPATH}/src/code.google.com/p"
+export PATH="$PATH:$GOPATH/bin"
+export CDPATH=".:$GOPATH/src/github.com:$GOPATH/src/code.google.com/p"
