@@ -1,134 +1,75 @@
 #!/usr/bin/env sh
 
-# Basic configuration.
-printf "\n    Hostname:\n"
-while [ -z "$CONF_HOSTNAME" ]; do
-  printf "      > "; read CONF_HOSTNAME
-done
-
-printf "\n    Username:\n"
-while [ -z "$CONF_USERNAME" ]; do
-  printf "      > "; read CONF_USERNAME
-done
-
-printf "\n    Password:\n"
-while [ -z "$CONF_PASSWORD" ]; do
-  printf "      > "; read -s CONF_PASSWORD; printf "\n"
-done
-
-# Location configuration.
-printf "\n    Keymap (e.g. \"uk\"):\n"
-while [ -z "$CONF_KEYMAP" ]; do
-  printf "      > "; read CONF_KEYMAP
-done
-
-printf "\n    Timezone (e.g. \"Europe/London\"):\n"
-while [ -z "$CONF_TIMEZONE" ]; do
-  printf "      > "; read CONF_TIMEZONE
-done
+# Device configuration.
+CONF_DEVICE=/dev/sda
+CONF_BOOT_PARTITION=1
+CONF_LUKS_PARTITION=2
 
 # LUKS configuration.
-printf "\n    LUKS device (e.g. \"/dev/sda\"):\n"
-while [ -z "$CONF_DEVICE" ]; do
-  printf "      > "; read CONF_DEVICE
-done
-
-printf "\n    LUKS volume name (e.g. \"crypt\"):\n"
-while [ -z "$CONF_DMNAME" ]; do
-  printf "      > "; read CONF_DMNAME
-done
-
-printf "\n    LUKS password:\n"
-while [ -z "$CONF_LUKS_PASSPHRASE" ]; do
-  printf "      > "; read -s CONF_LUKS_PASSPHRASE; printf "\n"
-done
+CONF_LUKS_DMNAME=crypt
+CONF_LUKS_PASSPHRASE=?
 
 # LVM configuration.
-printf "\n    LVM volume name (e.g. \"system\"):\n"
-while [ -z "$CONF_VGNAME" ]; do
-  printf "      > "; read CONF_VGNAME
-done
+CONF_LVM_VGNAME=system
+CONF_LVM_ROOT_SIZE=8G
+CONF_LVM_VAR_SIZE=6G
+CONF_LVM_SWAP_SIZE=2G
 
-printf "\n    / partition size (e.g. \"8G\"):\n"
-while [ -z "$CONF_ROOT_SIZE" ]; do
-  printf "      > "; read CONF_ROOT_SIZE
-done
-
-printf "\n    /var partition size (e.g. \"4G\"):\n"
-while [ -z "$CONF_VAR_SIZE" ]; do
-  printf "      > "; read CONF_VAR_SIZE
-done
-
-printf "\n    Swap partition size (e.g. \"1G\"):\n"
-while [ -z "$CONF_SWAP_SIZE" ]; do
-  printf "      > "; read CONF_SWAP_SIZE
-done
+# Basic system/user configuration.
+CONF_HOSTNAME=?
+CONF_USERNAME=erkl
+CONF_PASSWORD=?
+CONF_KEYMAP=uk
+CONF_TIMEZONE=Europe/London
 
 # Ask for confirmation before starting.
-printf "\n -- Ready, press any key to begin. --\n"
+printf "\n"
+printf "  ##  Did you remember to configure this script?\n"
+printf "  ##  If so, press enter to begin.\n"
+printf "\n"
+
 read
 
 # Stop at the first sign of trouble.
 set -ex
 
-# Write the new MBR partition table.
-fdisk "$CONF_DEVICE" <<EOF
-o
-n
-p
-1
-
-+256M
-n
-p
-2
-
-
-t
-2
-8e
-a
-1
-w
-EOF
-
 # Turn the second partition into an encrypted LUKS container.
-cryptsetup luksFormat "${CONF_DEVICE}2" <<EOF
+cryptsetup luksFormat "$CONF_DEVICE$CONF_LUKS_PARTITION" <<EOF
 $CONF_LUKS_PASSPHRASE
 EOF
 
-cryptsetup luksOpen "${CONF_DEVICE}2" "$CONF_DMNAME" <<EOF
+cryptsetup luksOpen "$CONF_DEVICE$CONF_LUKS_PARTITION" "$CONF_LUKS_DMNAME" <<EOF
 $CONF_LUKS_PASSPHRASE
 EOF
 
 # Create LVM volumes.
-pvcreate "/dev/mapper/$CONF_DMNAME"
-vgcreate system "/dev/mapper/$CONF_DMNAME"
+pvcreate "/dev/mapper/$CONF_LUKS_DMNAME"
+vgcreate system "/dev/mapper/$CONF_LUKS_DMNAME"
 
-lvcreate system -n swap -L "$CONF_SWAP_SIZE"
-lvcreate system -n root -L "$CONF_ROOT_SIZE"
-lvcreate system -n var  -L "$CONF_VAR_SIZE"
+lvcreate system -n swap -L "$CONF_LVM_SWAP_SIZE"
+lvcreate system -n root -L "$CONF_LVM_ROOT_SIZE"
+lvcreate system -n var  -L "$CONF_LVM_VAR_SIZE"
 lvcreate system -n home -l 100%FREE
 
 # Prepare filesystems.
-mkfs.ext2 "${CONF_DEVICE}1"
+mkfs.ext2 "$CONF_DEVICE$CONF_BOOT_PARTITION"
 
-mkfs.ext4 "/dev/mapper/$CONF_VGNAME-root"
-mkfs.ext4 "/dev/mapper/$CONF_VGNAME-var"
-mkfs.ext4 "/dev/mapper/$CONF_VGNAME-home"
+mkfs.ext4 "/dev/mapper/$CONF_LVM_VGNAME-root"
+mkfs.ext4 "/dev/mapper/$CONF_LVM_VGNAME-var"
+mkfs.ext4 "/dev/mapper/$CONF_LVM_VGNAME-home"
 
 # Mount the filesystems.
-mount "/dev/mapper/$CONF_VGNAME-root" /mnt
+mount "/dev/mapper/$CONF_LVM_VGNAME-root" /mnt
 
 mkdir /mnt/{boot,var,home}
 
-mount "${CONF_DEVICE}1" /mnt/boot
-mount "/dev/mapper/$CONF_VGNAME-var" /mnt/var
-mount "/dev/mapper/$CONF_VGNAME-home" /mnt/home
+mount "$CONF_DEVICE$CONF_BOOT_PARTITION" /mnt/boot
+mount "/dev/mapper/$CONF_LVM_VGNAME-var" /mnt/var
+mount "/dev/mapper/$CONF_LVM_VGNAME-home" /mnt/home
 
 # Initialize our swap partition.
-mkswap "/dev/mapper/$CONF_VGNAME-swap"
-swapon "/dev/mapper/$CONF_VGNAME-swap"
+mkswap "/dev/mapper/$CONF_LVM_VGNAME-swap"
+swapon "/dev/mapper/$CONF_LVM_VGNAME-swap"
 
 # Use UK mirrors.
 cat > /etc/pacman.d/mirrorlist <<EOF
@@ -173,7 +114,7 @@ EOF
 cat > /mnt/etc/hosts <<EOF
 #<ip-address>   <hostname.domain.org>   <hostname>
 127.0.0.1       localhost.localdomain   localhost    $CONF_HOSTNAME
-::1             localhost.localdomain   localhost
+::1             localhost.localdomain   localhost    $CONF_HOSTNAME
 EOF
 
 # Configure locale.
