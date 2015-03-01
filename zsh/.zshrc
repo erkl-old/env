@@ -33,7 +33,7 @@ precmd() {
 bindkey -e
 
 # Use sensible word characters.
-export WORDCHARS='*?[]~=/&;!$%^(){}'
+export WORDCHARS='*?[]~&!$%^()'
 
 # Make completion of lowercase strings case-insensitive.
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
