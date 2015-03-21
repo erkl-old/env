@@ -10,6 +10,12 @@ CONF_SWAP_SIZE="2G"
 CONF_TIMEZONE="Europe/London"
 CONF_KEYMAP="uk"
 
+# Prompt for the hostname.
+while [ -z "${CONF_HOSTNAME}" ]; do
+  printf "Hostname: "
+  read CONF_HOSTNAME
+done
+
 # Prompt for a LUKS passphrase.
 while [ -z "$CONF_PASSPHRASE" ]; do
   printf "LUKS passphrase: "
@@ -108,6 +114,17 @@ pacstrap /mnt base base-devel grub-bios ifplugd wpa_actiond git
 
 # Generate /etc/fstab.
 genfstab -p /mnt > /mnt/etc/fstab
+
+# Set hostname.
+cat > /mnt/etc/hostname <<EOF
+${CONF_HOSTNAME}
+EOF
+
+sudo cat > /etc/hosts <<EOF
+#<ip-address>   <hostname.domain.org>   <hostname>   ...
+127.0.0.1       localhost.localdomain   localhost    ${CONF_HOSTNAME}
+::1             localhost.localdomain   localhost    ${CONF_HOSTNAME}
+EOF
 
 # Create the primary user account.
 arch-chroot /mnt /bin/bash -c "useradd -m -G wheel -s /bin/bash '${CONF_USERNAME}'"
