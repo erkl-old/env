@@ -100,7 +100,7 @@ Server = http://archlinux.mirrors.uk2.net/\$repo/os/\$arch
 EOF
 
 # Bootstrap the base system.
-pacstrap /mnt base base-devel grub-bios ifplugd wpa_actiond
+pacstrap /mnt base base-devel grub-bios ifplugd wpa_actiond git
 
 # Generate /etc/fstab.
 genfstab -p /mnt > /mnt/etc/fstab
@@ -133,6 +133,9 @@ sed -e 's|^GRUB_CMDLINE_LINUX=.*$|GRUB_CMDLINE_LINUX="cryptdevice='"${CONF_DEVIC
 sed -e 's|^GRUB_GFXMODE=.*$|GRUB_GFXMODE=800x600,600x480|' -i /mnt/etc/default/grub
 arch-chroot /mnt /bin/bash -c "grub-install --target=i386-pc --recheck ${CONF_DEVICE}"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
+
+# Clone the repository into the user's home folder.
+arch-chroot /mnt /bin/bash -c "sudo -u ${CONF_USERNAME} git clone 'https://github.com/erkl/env.git' /home/${CONF_USERNAME}/.env"
 
 # Unmount the new system.
 umount -R /mnt
