@@ -2,7 +2,7 @@
 set -ex
 
 # Symlink all dotfiles into the home directory.
-for file in $(find -mindepth 1 "${HOME}/.env/dotfiles"); do
+for file in $(find "${HOME}/.env/dotfiles" -mindepth 1); do
   base=$(basename "${file}")
-  ln -sf "${HOME}/.env/dotfiles/${base}" "${HOME}/${file}"
-fi
+  ln -sf "${file}" "${HOME}/${base}"
+done
