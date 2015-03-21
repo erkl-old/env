@@ -50,7 +50,7 @@ t
 w
 EOF
 
-# Setup a LUKS partition on the device's second partition.
+# Setup LUKS encryption on the device's second partition.
 cryptsetup luksFormat "${CONF_DEVICE}2" <<EOF
 ${CONF_PASSPHRASE}
 EOF
