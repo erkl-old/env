@@ -13,12 +13,6 @@ while [ -z "$CONF_PASSPHRASE" ]; do
   printf "\n"
 done
 
-# Prompt for the hostname.
-while [ -z "${CONF_HOSTNAME}" ]; do
-  printf "Hostname: "
-  read CONF_HOSTNAME
-done
-
 # Prompt for user credentials.
 while [ -z "${CONF_USERNAME}" ]; do
   printf "Username: "
