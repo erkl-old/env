@@ -51,8 +51,13 @@ w
 EOF
 
 # Setup a LUKS partition on the device's second partition.
-printf "${CONF_PASSPHRASE}\n" | cryptsetup luksFormat "${CONF_DEVICE}2"
-printf "${CONF_PASSPHRASE}\n" | cryptsetup luksOpen "${CONF_DEVICE}2" "crypt"
+cryptsetup luksFormat "${CONF_DEVICE}2" <<EOF
+${CONF_PASSPHRASE}
+EOF
+
+cryptsetup luksOpen "${CONF_DEVICE}2" "crypt" <<EOF
+${CONF_PASSPHRASE}
+EOF
 
 # Create a logical volume using LVM, on top of our LUKS partition.
 pvcreate "/dev/mapper/crypt"
