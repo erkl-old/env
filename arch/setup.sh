@@ -20,8 +20,8 @@ openssl enc -aes-256-cbc -d -base64 -in "${HOME}/.env/keys/id_rsa.enc" -out "${H
 openssl enc -aes-256-cbc -d -base64 -in "${HOME}/.env/keys/id_rsa.pub.enc" -out "${HOME}/.ssh/id_rsa.pub"
 
 chmod 0700 "${HOME}/.ssh"
-chmod 0600 "${HOME}/.ssh/id_rsa.pub"
-chmod 0644 "${HOME}/.ssh/id_rsa"
+chmod 0644 "${HOME}/.ssh/id_rsa.pub"
+chmod 0600 "${HOME}/.ssh/id_rsa"
 
 # Link the authorized_keys file to id_rsa.
 ln -sf "${HOME}/.ssh/id_rsa.pub" "${HOME}/.ssh/authorized_keys"
