@@ -69,10 +69,10 @@ lvcreate lvm -n var  -L "${CONF_VAR_SIZE}"
 lvcreate lvm -n home -l 100%FREE
 
 # Initialize file systems.
-mkfs.ext2 "${CONF_DEVICE}1"
-mkfs.ext4 "/dev/mapper/lvm-root"
-mkfs.ext4 "/dev/mapper/lvm-var"
-mkfs.ext4 "/dev/mapper/lvm-home"
+mkfs.ext2 -F "${CONF_DEVICE}1"
+mkfs.ext4 -F "/dev/mapper/lvm-root"
+mkfs.ext4 -F "/dev/mapper/lvm-var"
+mkfs.ext4 -F "/dev/mapper/lvm-home"
 
 # Mount partitions.
 mount "/dev/mapper/lvm-root" /mnt
