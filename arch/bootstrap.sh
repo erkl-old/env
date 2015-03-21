@@ -2,9 +2,13 @@
 
 # Configuration variables.
 CONF_DEVICE="/dev/sda"
+
 CONF_ROOT_SIZE="16G"
 CONF_VAR_SIZE="8G"
 CONF_SWAP_SIZE="2G"
+
+CONF_TIMEZONE="Europe/London"
+CONF_KEYMAP="uk"
 
 # Prompt for a LUKS passphrase.
 while [ -z "$CONF_PASSPHRASE" ]; do
@@ -122,6 +126,23 @@ EOF
 
 # Disable root login.
 arch-chroot /mnt /bin/bash -c "passwd -l root"
+
+# Configure locale.
+cat > /mnt/etc/locale.conf <<EOF
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+EOF
+
+cat > /mnt/etc/locale.gen <<EOF
+en_US.UTF-8 UTF-8
+EOF
+
+arch-chroot /mnt /bin/bash -c "locale-gen"
+
+# Set keyboard layout.
+cat > /mnt/etc/vconsole.conf <<EOF
+KEYMAP=${CONF_KEYMAP}
+EOF
 
 # Add "keymap", "encrypt", "lvm" and "resume" hooks, then build the initial
 # ramdisk environment.
