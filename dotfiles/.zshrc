@@ -22,10 +22,16 @@ SAVEHIST=1000
 
 # Use a very simple prompt.
 precmd() {
-  if [ -n "$SSH_CLIENT" ]; then
-    PROMPT=`echo "\033[33m%n@%m\033[0m %# "`
+  if [ "$PWD" = "$HOME" ]; then
+    dir="~"
   else
-    PROMPT="%# "
+    dir=$(basename "$PWD")
+  fi
+
+  if [ -n "$SSH_CLIENT" ]; then
+    PROMPT=`echo "\033[33m%n@%m\033[0m $dir %# "`
+  else
+    PROMPT="$dir %# "
   fi
 }
 
