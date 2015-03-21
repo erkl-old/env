@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-set -ex
 
 # Configuration variables.
 CONF_DEVICE="/dev/sda"
@@ -31,6 +30,9 @@ while [ -z "${CONF_PASSWORD}" ]; do
   read -s CONF_PASSWORD
   printf "\n"
 done
+
+# Stop at the first sign of trouble.
+set -ex
 
 # Replace the device's current partition layout with our own: a 256MB boot
 # partition, and a partition using all remaining space to use for LUKS.
