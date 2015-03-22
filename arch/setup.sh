@@ -10,6 +10,12 @@ sudo pacman -S --needed --noconfirm  \
     mesa-libgl                       \
     xf86-video-intel                 \
                                      \
+    xorg-server                      \
+    extra/xorg-server-utils          \
+    bspwm                            \
+    sxhkb                            \
+    urxvt                            \
+                                     \
     curl                             \
     openssh                          \
     openssl                          \
