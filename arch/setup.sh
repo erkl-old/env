@@ -5,6 +5,11 @@ set -ex
 sudo pacman -Syu
 
 sudo pacman -S --needed --noconfirm  \
+    libva                            \
+    libva-intel-driver               \
+    mesa-libgl                       \
+    xf86-video-intel                 \
+                                     \
     curl                             \
     openssh                          \
     openssl                          \
